@@ -28,7 +28,69 @@ Next, the **calculate_track** function is used (resides within calculatetrack.py
 
 If the dot product of the direction vectors of two consecutive points is less than the direction_threshold, the track is not considered to be moving in the same direction. Otherwise, the tracks are considered to be the same, and are merged.
 
-The new hash_list is returned to fusionservice.py, with the **send_messages** function being used to publish messaged to Kafka on a 'Fusion' topic.  The following section of the code is included to demonstrate the fusion process working, and should be removed for 'real' data:
+The new hash_list is returned to fusionservice.py, with the **send_messages** function being used to publish messaged to Kafka on a 'Fusion' topic. For now, the ORIGINATORID is retained as the top level ID, but in reality you may want to generate a unique ID from the fusion service which maps to any ORIGINATORID's that have been associated with that fused track. 
+
+e.g.
+
+```
+[
+    {
+        "ORIGINATORID": "0",
+        "DETECTIONTIME": "2023-11-22T15:20:26",
+        "LATITUDE": 0.0,
+        "LONGITUDE": 0.0005,
+        "HASH": "044bdf572f3c735fac38e4d541a47a937c850c74f7bdcb37e4fba45bc671af85",
+        "TRACK": [
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            }
+        ]
+]
+
+Becomes
+
+[
+    {
+        "FUSIONID": "A",
+        "ORIGINATORID": "0",
+        "DETECTIONTIME": "2023-11-22T15:20:26",
+        "LATITUDE": 0.0,
+        "LONGITUDE": 0.0005,
+        "HASH": "044bdf572f3c735fac38e4d541a47a937c850c74f7bdcb37e4fba45bc671af85",
+        "TRACK": [
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            }
+        ]
+]
+```
+The following section of the code is included to demonstrate the fusion process working, and should be removed for 'real' data:
 
 ```
             # For demo purposes only!
