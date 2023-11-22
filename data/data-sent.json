@@ -1,0 +1,101 @@
+[
+    {
+        "ORIGINATORID": "0",
+        "DETECTIONTIME": "2023-11-22T15:20:26",
+        "LATITUDE": 0.0,
+        "LONGITUDE": 0.0005,
+        "HASH": "044bdf572f3c735fac38e4d541a47a937c850c74f7bdcb37e4fba45bc671af85",
+        "TRACK": [
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "2",
+                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-22T15:19:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.001,
+                "DISTANCE": 55.59754011676646,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-22T15:18:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0015,
+                "DISTANCE": 111.19508023353292,
+                "ISDUPLICATE": false
+            }
+        ]
+    },
+    {
+        "ORIGINATORID": "1",
+        "DETECTIONTIME": "2023-11-22T15:19:26",
+        "LATITUDE": 0.0,
+        "LONGITUDE": 0.001,
+        "HASH": "0907d2fd2c83fff5da15dfadc4da08aafc49b0f5996cb17b94e62961e03f5442",
+        "TRACK": [
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-22T15:19:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.001,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "2",
+                "DETECTIONTIME": "2023-11-22T15:19:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.001,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            },
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-22T15:18:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0015,
+                "DISTANCE": 55.59754011676646,
+                "ISDUPLICATE": false
+            }
+        ]
+    },
+    {
+        "ORIGINATORID": "2",
+        "DETECTIONTIME": "2023-11-22T15:18:26",
+        "LATITUDE": 0.0,
+        "LONGITUDE": 0.0015,
+        "HASH": "638c6dd19680e18b2606b0d4a61cd200e20e8ce1ede35656da332bcd1219d44d",
+        "TRACK": [
+            {
+                "ORIGINATORID": "2",
+                "DETECTIONTIME": "2023-11-22T15:18:26",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0015,
+                "DISTANCE": 0.0,
+                "ISDUPLICATE": false
+            }
+        ]
+    }
+]
