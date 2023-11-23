@@ -36,58 +36,60 @@ e.g.
 [
     {
         "ORIGINATORID": "0",
-        "DETECTIONTIME": "2023-11-22T15:20:26",
+        "DETECTIONTIME": "2023-11-23T11:54:55",
         "LATITUDE": 0.0,
         "LONGITUDE": 0.0005,
-        "HASH": "044bdf572f3c735fac38e4d541a47a937c850c74f7bdcb37e4fba45bc671af85",
+        "HASH": "db983d39b5e12e9f7944e70b1600f327ef4bb7b21d18ea3c86831545fb3b0dc2",
         "TRACK": [
             {
                 "ORIGINATORID": "0",
-                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
                 "LATITUDE": 0.0,
                 "LONGITUDE": 0.0005,
                 "DISTANCE": 0.0,
-                "ISDUPLICATE": false
+                "SPEED": 0.0
             },
             {
                 "ORIGINATORID": "1",
-                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
                 "LATITUDE": 0.0,
                 "LONGITUDE": 0.0005,
                 "DISTANCE": 0.0,
-                "ISDUPLICATE": false
+                "SPEED": 0.0
             }
         ]
+    }
 ]
 
 Becomes
 
 [
     {
-        "FUSIONID": "A",
+        "FUSIONID: "A"
         "ORIGINATORID": "0",
-        "DETECTIONTIME": "2023-11-22T15:20:26",
+        "DETECTIONTIME": "2023-11-23T11:54:55",
         "LATITUDE": 0.0,
         "LONGITUDE": 0.0005,
-        "HASH": "044bdf572f3c735fac38e4d541a47a937c850c74f7bdcb37e4fba45bc671af85",
+        "HASH": "db983d39b5e12e9f7944e70b1600f327ef4bb7b21d18ea3c86831545fb3b0dc2",
         "TRACK": [
             {
                 "ORIGINATORID": "0",
-                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
                 "LATITUDE": 0.0,
                 "LONGITUDE": 0.0005,
                 "DISTANCE": 0.0,
-                "ISDUPLICATE": false
+                "SPEED": 0.0
             },
             {
                 "ORIGINATORID": "1",
-                "DETECTIONTIME": "2023-11-22T15:20:26",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
                 "LATITUDE": 0.0,
                 "LONGITUDE": 0.0005,
                 "DISTANCE": 0.0,
-                "ISDUPLICATE": false
+                "SPEED": 0.0
             }
         ]
+    }
 ]
 ```
 The following section of the code is included to demonstrate the fusion process working, and should be removed for 'real' data:
@@ -104,3 +106,34 @@ The following section of the code is included to demonstrate the fusion process 
 ### ./data
 
 This contains some json message exports from fusionservice.py to show how tracks are being combined and seperated as more data is obtained.  **data-sent.json** is an example of the totality of the analysis of a batch of messages.
+
+The DISTANCE field within each record (n) under TRACK is the haversine distance between n and n+1.
+
+The SPEED field within each record (n) under TRACK is the DISTANCE / DETECTIONTIME(n+1) - DETECTIONTIME(n).
+
+```
+            {
+                "ORIGINATORID": "1",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 0.0,
+                "SPEED": 0.0
+            },
+            {
+                "ORIGINATORID": "2",
+                "DETECTIONTIME": "2023-11-23T11:54:55",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.0005,
+                "DISTANCE": 55.59754011676646,
+                "SPEED": 0.9266256686127743
+            },
+            {
+                "ORIGINATORID": "0",
+                "DETECTIONTIME": "2023-11-23T11:53:55",
+                "LATITUDE": 0.0,
+                "LONGITUDE": 0.001,
+                "DISTANCE": 55.59754011676646,
+                "SPEED": 0.9266256686127743
+            }
+```

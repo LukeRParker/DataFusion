@@ -3,12 +3,8 @@ import numpy as np
 from haversine import haversine, Unit
 from datetime import datetime
 
-def calculate_average_distance(track):
-    distances = [haversine(point1, point2, unit=Unit.METERS) for point1, point2 in zip(track[:-1], track[1:])]
-    if len(distances) == 0:
-        return 0
-    av_distance = np.mean(distances)
-    return av_distance
+def calculate_distance(track):
+    return [haversine(point1, point2, unit=Unit.METERS) for point1, point2 in zip(track[:-1], track[1:])]
 
 def check_same_direction(track, direction_threshold):
     directions = [np.array(point2) - np.array(point1) for point1, point2 in zip(track[:-1], track[1:])]
@@ -21,8 +17,33 @@ def is_same_track(data1, data2, distance_threshold, direction_threshold):
     track1 = data1['TRACK']
     track2 = data2['TRACK']
 
-    avg_distance1 = calculate_average_distance([(record['LATITUDE'], record['LONGITUDE']) for record in track1])
-    avg_distance2 = calculate_average_distance([(record['LATITUDE'], record['LONGITUDE']) for record in track2])
+    track1_record = [(record['LATITUDE'], record['LONGITUDE']) for record in data1['TRACK']]
+    track2_record = [(record['LATITUDE'], record['LONGITUDE']) for record in data2['TRACK']]
+
+    distance1 = calculate_distance(track1_record)
+    if len(distance1) == 0:
+        distance1 = 0
+    else:
+        for i in range(len(distance1)):
+            data1['TRACK'][i]['DISTANCE'] = distance1[i]
+            if distance1[i] == 0:
+                data1['TRACK'][i]['SPEED'] = 0.0
+            else:
+                data1['TRACK'][i]['SPEED'] = distance1[i]/((datetime.strptime(data1['TRACK'][i]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S')) - (datetime.strptime(data1['TRACK'][i+1]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S'))).total_seconds()
+
+    distance2 = calculate_distance(track2_record)
+    if len(distance2) == 0:
+        distance2 = 0
+    else:
+        for i in range(len(distance2)):
+            data2['TRACK'][i]['DISTANCE'] = distance2[i]
+            if distance2[i] == 0:
+                data2['TRACK'][i]['SPEED'] = 0.0
+            else:
+                data2['TRACK'][i]['SPEED'] = distance2[i]/((datetime.strptime(data2['TRACK'][i]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S')) - (datetime.strptime(data2['TRACK'][i+1]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S'))).total_seconds()
+
+    avg_distance1 = np.mean(distance1)
+    avg_distance2 = np.mean(distance2)
     
     if abs(avg_distance1 - avg_distance2) > distance_threshold:
         return False
@@ -36,6 +57,19 @@ def is_same_track(data1, data2, distance_threshold, direction_threshold):
 
     # Sort the combined track by DETECTIONTIME in descending order (newest to oldest)
     combined_data['TRACK'].sort(key=lambda record: datetime.strptime(record['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S'), reverse=True)
+    
+    combined_track_record = [(record['LATITUDE'], record['LONGITUDE']) for record in combined_data['TRACK']]
+    combined_distances = calculate_distance(combined_track_record)
+
+    if len(combined_distances) == 0:
+        combined_distances = 0
+    else:
+        for i in range(len(combined_distances)):
+            combined_data['TRACK'][i]['DISTANCE'] = combined_distances[i]
+            if combined_distances[i] == 0:
+                combined_data['TRACK'][i]['SPEED'] = 0.0
+            else:
+                combined_data['TRACK'][i]['SPEED'] = combined_distances[i]/((datetime.strptime(combined_data['TRACK'][i]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S')) - (datetime.strptime(combined_data['TRACK'][i+1]['DETECTIONTIME'], '%Y-%m-%dT%H:%M:%S'))).total_seconds()
 
     return combined_data
 

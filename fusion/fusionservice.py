@@ -7,7 +7,7 @@ from haversine import haversine, Unit
 from calculatetrack import calculate_track
 from testdatagen import generate_data
 
-stalevalue = 3             # Minutes. Ignore messages that have a DETECTIONTIME > 60 minutes ago.
+stalevalue = 60            # Minutes. Ignore messages that have a DETECTIONTIME > 60 minutes ago.
 distance_threshold = 100    # Meters. OBJECTIDs that are further apart than this distance are considered different.
 direction_threshold = 0.9   # See note below.
 poll_frequency = 1          # Minutes. How often to get new messages
@@ -44,7 +44,6 @@ def track_updater(hash_list, message):
 
         existing_datetime_value = datetime.timestamp(datetime.strptime(existing_message["DETECTIONTIME"], '%Y-%m-%dT%H:%M:%S'))
         new_datetime_value = datetime.timestamp(datetime.strptime(message["DETECTIONTIME"], '%Y-%m-%dT%H:%M:%S'))
-        distance = haversine((float(message['LATITUDE']), float(message['LONGITUDE'])), (float(existing_message['LATITUDE']), float(existing_message['LONGITUDE'])), unit=Unit.METERS)
 
         if message["ORIGINATORID"] == existing_message["ORIGINATORID"]:
             if existing_datetime_value < new_datetime_value:
@@ -52,8 +51,7 @@ def track_updater(hash_list, message):
                                         "DETECTIONTIME": existing_message["DETECTIONTIME"],
                                         "LATITUDE": existing_message["LATITUDE"],
                                         "LONGITUDE": existing_message["LONGITUDE"],
-                                        "DISTANCE": distance,
-                                        "ISDUPLICATE": False})
+                                        "DISTANCE": 0.0})
                 hash_list.append(message)
                 hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
  
@@ -64,8 +62,7 @@ def track_updater(hash_list, message):
                                         "DETECTIONTIME": message["DETECTIONTIME"],
                                         "LATITUDE": message["LATITUDE"],
                                         "LONGITUDE": message["LONGITUDE"],
-                                        "DISTANCE": distance,
-                                        "ISDUPLICATE": False})
+                                        "DISTANCE": 0.0})
                 hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
 
                 return hash_list
@@ -74,8 +71,7 @@ def track_updater(hash_list, message):
                             "DETECTIONTIME": message["DETECTIONTIME"],
                             "LATITUDE": message["LATITUDE"],
                             "LONGITUDE": message["LONGITUDE"],
-                            "DISTANCE": 0.0,
-                            "ISDUPLICATE": False})
+                            "DISTANCE": 0.0})
     hash_list.append(message)
     hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
 
