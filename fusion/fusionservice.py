@@ -50,8 +50,7 @@ def track_updater(hash_list, message):
                 message["TRACK"].append({"ORIGINATORID": existing_message["ORIGINATORID"],
                                         "DETECTIONTIME": existing_message["DETECTIONTIME"],
                                         "LATITUDE": existing_message["LATITUDE"],
-                                        "LONGITUDE": existing_message["LONGITUDE"],
-                                        "DISTANCE": 0.0})
+                                        "LONGITUDE": existing_message["LONGITUDE"]})
                 hash_list.append(message)
                 hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
  
@@ -61,8 +60,7 @@ def track_updater(hash_list, message):
                 existing_message["TRACK"].append({"ORIGINATORID": message["ORIGINATORID"],
                                         "DETECTIONTIME": message["DETECTIONTIME"],
                                         "LATITUDE": message["LATITUDE"],
-                                        "LONGITUDE": message["LONGITUDE"],
-                                        "DISTANCE": 0.0})
+                                        "LONGITUDE": message["LONGITUDE"]})
                 hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
 
                 return hash_list
@@ -70,8 +68,7 @@ def track_updater(hash_list, message):
     message["TRACK"].append({"ORIGINATORID": message["ORIGINATORID"],
                             "DETECTIONTIME": message["DETECTIONTIME"],
                             "LATITUDE": message["LATITUDE"],
-                            "LONGITUDE": message["LONGITUDE"],
-                            "DISTANCE": 0.0})
+                            "LONGITUDE": message["LONGITUDE"]})
     hash_list.append(message)
     hash_list = calculate_track(json.dumps(hash_list),distance_threshold, direction_threshold)
 

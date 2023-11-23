@@ -107,9 +107,9 @@ The following section of the code is included to demonstrate the fusion process 
 
 This contains some json message exports from fusionservice.py to show how tracks are being combined and seperated as more data is obtained.  **data-sent.json** is an example of the totality of the analysis of a batch of messages.
 
-The DISTANCE field within each record (n) under TRACK is the haversine distance between n and n+1.
+The DISTANCE field within each record (n) under TRACK is the haversine distance between n and n+1 in meters.
 
-The SPEED field within each record (n) under TRACK is the DISTANCE / DETECTIONTIME(n+1) - DETECTIONTIME(n).
+The SPEED field within each record (n) under TRACK is the DISTANCE / DETECTIONTIME(n+1) - DETECTIONTIME(n) in meters per second.
 
 ```
             {
