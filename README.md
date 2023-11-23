@@ -1,6 +1,12 @@
 # Object Track Generation and Duplication Detection Demo
 
-This demo shows how disparate sensors that detect the same object could have their data feeds 'fused' together to provide a coherent picture based on some assumptions around minimum distance and direction of travel of the object tracks relative to one another.
+This demo shows how disparate sensors that detect the same object could have their data feeds 'fused' together. This fusion process would enable a more accurate picture of real world objects to be mapped.
+
+This demo achieves this by making some assumptions around minimum distance and direction of travel of any number of object tracks relative to each another. In a real world scenario, the following considerations would also need to be taken into account, but for simplicity, have been excluded from this demo:
+
+- Order of precedence of sensor data e.g. AIS data potentially taking primacy over radar.
+- Aggregation of specific data elements from original source sensors during the fusion process e.g. when combining tracks, you may want to include unique insight from each sensor such as MMSI from AIS, and distance from the radar for radar data.
+- Differing rules for minimum distance and relative directions of movement based on the physical characteristics of the detected object e.g. the minimum distances between sailing boats is likely to be different to the minimum distance between container ships. Equally, ships in port will be closer to one another than ships at sea.
 
 In the ./fusion folder, you'll find the following Python scripts:
 
